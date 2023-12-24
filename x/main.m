@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XSError.h"
+#import "XSPrint.h"
 
 #define X_JSON "x.json"
 #define X_JSON5 "x.json5"
@@ -56,7 +57,7 @@ int main(int argc, const char *argv[]) {
         int code = find(&url);
         
         if (code) {
-            NSLog(@"(%d)", code);
+            [XSPrint error:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
             free(url);
             
             return code;
@@ -69,9 +70,12 @@ int main(int argc, const char *argv[]) {
             free(url);
         }
         
-        NSLog(@"x path %@", path);
-        NSLog(@"x build %s%d", BUILD_VERSION, BUILD_NUMBER);
+        [XSPrint info:@"github/x" prefix:nil];
+        [XSPrint success:@"done" prefix:nil];
+        [XSPrint warning:@"not found" prefix:nil];
+        [XSPrint error:@"failed" prefix:nil];
+        [XSPrint line:[NSString stringWithFormat:@"build %s%d", BUILD_VERSION, BUILD_NUMBER]];
+        
+        return 0;
     }
-    
-    return 0;
 }

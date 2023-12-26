@@ -11,6 +11,10 @@
 #import "XSPrint.h"
 #import "XSRuntime.h"
 
+#ifdef TESTING
+#import "testing.h"
+#endif
+
 int find(char **url) {
     NSArray *extensions = @[ @X_JSON, @X_JSON5 ];
     NSFileManager *manager = NSFileManager.defaultManager;

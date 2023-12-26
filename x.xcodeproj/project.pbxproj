@@ -8,18 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		37A3A19A2B34701C0000F0FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1992B34701C0000F0FC /* main.m */; };
-		37A3A1B62B3547A20000F0FC /* tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1B52B3547A20000F0FC /* tests.m */; };
+		37A3A1B62B3547A20000F0FC /* testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1B52B3547A20000F0FC /* testing.m */; };
 		37A3A1BB2B372EC30000F0FC /* XSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BA2B372EC30000F0FC /* XSError.m */; };
 		37A3A1BF2B3775860000F0FC /* XSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BE2B3775860000F0FC /* XSPrint.m */; };
 		37A3A1C22B37FBF80000F0FC /* XSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C12B37FBF80000F0FC /* XSRuntime.m */; };
-		37A3A1CE2B3B6F3E0000F0FC /* XSDefine.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C32B38DC3F0000F0FC /* XSDefine.h */; };
-		37A3A1CF2B3B6F3E0000F0FC /* XSError.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BC2B372F770000F0FC /* XSError.h */; };
-		37A3A1D02B3B6F3E0000F0FC /* XSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BA2B372EC30000F0FC /* XSError.m */; };
-		37A3A1D12B3B6F3E0000F0FC /* XSPrint.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BD2B3767310000F0FC /* XSPrint.h */; };
-		37A3A1D22B3B6F3E0000F0FC /* XSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BE2B3775860000F0FC /* XSPrint.m */; };
-		37A3A1D32B3B6F3E0000F0FC /* XSRuntime.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C02B37FBE90000F0FC /* XSRuntime.h */; };
-		37A3A1D42B3B6F3E0000F0FC /* XSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C12B37FBF80000F0FC /* XSRuntime.m */; };
-		37A3A1D62B3B6F3E0000F0FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1992B34701C0000F0FC /* main.m */; };
+		37A3A1DA2B3B799D0000F0FC /* XSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BA2B372EC30000F0FC /* XSError.m */; };
+		37A3A1DC2B3B799D0000F0FC /* XSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BE2B3775860000F0FC /* XSPrint.m */; };
+		37A3A1DE2B3B799D0000F0FC /* XSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C12B37FBF80000F0FC /* XSRuntime.m */; };
+		37A3A1DF2B3B799D0000F0FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1992B34701C0000F0FC /* main.m */; };
+		37A3A1E42B3B89820000F0FC /* x.json5 in Resources */ = {isa = PBXBuildFile; fileRef = 37A3A1E22B3B7EF00000F0FC /* x.json5 */; };
+		37A3A1E62B3B8DF40000F0FC /* x.json in Resources */ = {isa = PBXBuildFile; fileRef = 37A3A1E52B3B8DF40000F0FC /* x.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +36,7 @@
 		37A3A1962B34701C0000F0FC /* x */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = x; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A3A1992B34701C0000F0FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		37A3A1B32B3547A20000F0FC /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		37A3A1B52B3547A20000F0FC /* tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tests.m; sourceTree = "<group>"; };
+		37A3A1B52B3547A20000F0FC /* testing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testing.m; sourceTree = "<group>"; };
 		37A3A1BA2B372EC30000F0FC /* XSError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSError.m; sourceTree = "<group>"; };
 		37A3A1BC2B372F770000F0FC /* XSError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSError.h; sourceTree = "<group>"; };
 		37A3A1BD2B3767310000F0FC /* XSPrint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSPrint.h; sourceTree = "<group>"; };
@@ -46,6 +44,9 @@
 		37A3A1C02B37FBE90000F0FC /* XSRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSRuntime.h; sourceTree = "<group>"; };
 		37A3A1C12B37FBF80000F0FC /* XSRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSRuntime.m; sourceTree = "<group>"; };
 		37A3A1C32B38DC3F0000F0FC /* XSDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSDefine.h; sourceTree = "<group>"; };
+		37A3A1D72B3B77770000F0FC /* testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testing.h; sourceTree = "<group>"; };
+		37A3A1E22B3B7EF00000F0FC /* x.json5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = x.json5; sourceTree = "<group>"; };
+		37A3A1E52B3B8DF40000F0FC /* x.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = x.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +103,20 @@
 		37A3A1B42B3547A20000F0FC /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				37A3A1B52B3547A20000F0FC /* tests.m */,
+				37A3A1E12B3B7E9E0000F0FC /* json */,
+				37A3A1D72B3B77770000F0FC /* testing.h */,
+				37A3A1B52B3547A20000F0FC /* testing.m */,
 			);
 			path = tests;
+			sourceTree = "<group>";
+		};
+		37A3A1E12B3B7E9E0000F0FC /* json */ = {
+			isa = PBXGroup;
+			children = (
+				37A3A1E52B3B8DF40000F0FC /* x.json */,
+				37A3A1E22B3B7EF00000F0FC /* x.json5 */,
+			);
+			path = json;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,6 +197,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A3A1E62B3B8DF40000F0FC /* x.json in Resources */,
+				37A3A1E42B3B89820000F0FC /* x.json5 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,15 +220,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37A3A1CE2B3B6F3E0000F0FC /* XSDefine.h in Sources */,
-				37A3A1CF2B3B6F3E0000F0FC /* XSError.h in Sources */,
-				37A3A1D02B3B6F3E0000F0FC /* XSError.m in Sources */,
-				37A3A1D12B3B6F3E0000F0FC /* XSPrint.h in Sources */,
-				37A3A1D22B3B6F3E0000F0FC /* XSPrint.m in Sources */,
-				37A3A1D32B3B6F3E0000F0FC /* XSRuntime.h in Sources */,
-				37A3A1D42B3B6F3E0000F0FC /* XSRuntime.m in Sources */,
-				37A3A1D62B3B6F3E0000F0FC /* main.m in Sources */,
-				37A3A1B62B3547A20000F0FC /* tests.m in Sources */,
+				37A3A1DA2B3B799D0000F0FC /* XSError.m in Sources */,
+				37A3A1DC2B3B799D0000F0FC /* XSPrint.m in Sources */,
+				37A3A1DE2B3B799D0000F0FC /* XSRuntime.m in Sources */,
+				37A3A1DF2B3B799D0000F0FC /* main.m in Sources */,
+				37A3A1B62B3547A20000F0FC /* testing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

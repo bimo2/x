@@ -16,7 +16,7 @@
 
 + (void)warning:(NSString *)log prefix:(NSString *)prefix;
 
-+ (void)error:(NSString *)log prefix:(NSString *)prefix;
++ (void)failure:(NSString *)log prefix:(NSString *)prefix;
 
 + (void)line:(NSString *)log;
 

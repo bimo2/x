@@ -9,7 +9,8 @@
 #define XSERROR_H
 
 enum {
-    XSPathError = 100,
+    XSObjCError = 100,
+    XSPathError,
 };
 
 @interface NSError (XSError)

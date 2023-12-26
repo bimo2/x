@@ -22,7 +22,7 @@
     printf("\033[1;93m%s\033[0;93m %s\033[0m\n", [prefix ?: @"!" UTF8String], log.UTF8String);
 }
 
-+ (void)error:(NSString *)log prefix:(NSString *)prefix {
++ (void)failure:(NSString *)log prefix:(NSString *)prefix {
     printf("\033[1;91m%s\033[0;91m %s\033[0m\n", [prefix ?: @"\u2717" UTF8String], log.UTF8String);
 }
 

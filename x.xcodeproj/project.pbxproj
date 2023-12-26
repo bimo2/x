@@ -11,6 +11,15 @@
 		37A3A1B62B3547A20000F0FC /* tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1B52B3547A20000F0FC /* tests.m */; };
 		37A3A1BB2B372EC30000F0FC /* XSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BA2B372EC30000F0FC /* XSError.m */; };
 		37A3A1BF2B3775860000F0FC /* XSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BE2B3775860000F0FC /* XSPrint.m */; };
+		37A3A1C22B37FBF80000F0FC /* XSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C12B37FBF80000F0FC /* XSRuntime.m */; };
+		37A3A1CE2B3B6F3E0000F0FC /* XSDefine.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C32B38DC3F0000F0FC /* XSDefine.h */; };
+		37A3A1CF2B3B6F3E0000F0FC /* XSError.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BC2B372F770000F0FC /* XSError.h */; };
+		37A3A1D02B3B6F3E0000F0FC /* XSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BA2B372EC30000F0FC /* XSError.m */; };
+		37A3A1D12B3B6F3E0000F0FC /* XSPrint.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BD2B3767310000F0FC /* XSPrint.h */; };
+		37A3A1D22B3B6F3E0000F0FC /* XSPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1BE2B3775860000F0FC /* XSPrint.m */; };
+		37A3A1D32B3B6F3E0000F0FC /* XSRuntime.h in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C02B37FBE90000F0FC /* XSRuntime.h */; };
+		37A3A1D42B3B6F3E0000F0FC /* XSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1C12B37FBF80000F0FC /* XSRuntime.m */; };
+		37A3A1D62B3B6F3E0000F0FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1992B34701C0000F0FC /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +43,9 @@
 		37A3A1BC2B372F770000F0FC /* XSError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSError.h; sourceTree = "<group>"; };
 		37A3A1BD2B3767310000F0FC /* XSPrint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSPrint.h; sourceTree = "<group>"; };
 		37A3A1BE2B3775860000F0FC /* XSPrint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSPrint.m; sourceTree = "<group>"; };
+		37A3A1C02B37FBE90000F0FC /* XSRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSRuntime.h; sourceTree = "<group>"; };
+		37A3A1C12B37FBF80000F0FC /* XSRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSRuntime.m; sourceTree = "<group>"; };
+		37A3A1C32B38DC3F0000F0FC /* XSDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSDefine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +87,13 @@
 		37A3A1982B34701C0000F0FC /* x */ = {
 			isa = PBXGroup;
 			children = (
+				37A3A1C32B38DC3F0000F0FC /* XSDefine.h */,
 				37A3A1BC2B372F770000F0FC /* XSError.h */,
 				37A3A1BA2B372EC30000F0FC /* XSError.m */,
 				37A3A1BD2B3767310000F0FC /* XSPrint.h */,
 				37A3A1BE2B3775860000F0FC /* XSPrint.m */,
+				37A3A1C02B37FBE90000F0FC /* XSRuntime.h */,
+				37A3A1C12B37FBF80000F0FC /* XSRuntime.m */,
 				37A3A1992B34701C0000F0FC /* main.m */,
 			);
 			path = x;
@@ -181,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37A3A19A2B34701C0000F0FC /* main.m in Sources */,
+				37A3A1C22B37FBF80000F0FC /* XSRuntime.m in Sources */,
 				37A3A1BF2B3775860000F0FC /* XSPrint.m in Sources */,
 				37A3A1BB2B372EC30000F0FC /* XSError.m in Sources */,
 			);
@@ -190,6 +206,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A3A1CE2B3B6F3E0000F0FC /* XSDefine.h in Sources */,
+				37A3A1CF2B3B6F3E0000F0FC /* XSError.h in Sources */,
+				37A3A1D02B3B6F3E0000F0FC /* XSError.m in Sources */,
+				37A3A1D12B3B6F3E0000F0FC /* XSPrint.h in Sources */,
+				37A3A1D22B3B6F3E0000F0FC /* XSPrint.m in Sources */,
+				37A3A1D32B3B6F3E0000F0FC /* XSRuntime.h in Sources */,
+				37A3A1D42B3B6F3E0000F0FC /* XSRuntime.m in Sources */,
+				37A3A1D62B3B6F3E0000F0FC /* main.m in Sources */,
 				37A3A1B62B3547A20000F0FC /* tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

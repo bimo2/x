@@ -6,17 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XSDefine.h"
 #import "XSError.h"
 #import "XSPrint.h"
-
-#define X_JSON "x.json"
-#define X_JSON5 "x.json5"
-
-#define BUILD_VERSION "1A"
-
-#ifndef BUILD_NUMBER
-#define BUILD_NUMBER 1
-#endif
+#import "XSRuntime.h"
 
 int find(char **url) {
     NSArray *extensions = @[ @X_JSON, @X_JSON5 ];
@@ -51,16 +44,21 @@ int find(char **url) {
     return 0;
 }
 
+int sev(int code) {
+    [XSPrint failure:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
+    
+    return code;
+}
+
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
         char *url = NULL;
         int code = find(&url);
         
         if (code) {
-            [XSPrint error:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
             free(url);
             
-            return code;
+            return sev(code);
         };
         
         NSString *path;
@@ -70,11 +68,11 @@ int main(int argc, const char *argv[]) {
             free(url);
         }
         
-        [XSPrint info:@"github/x" prefix:nil];
-        [XSPrint success:@"done" prefix:nil];
-        [XSPrint warning:@"not found" prefix:nil];
-        [XSPrint error:@"failed" prefix:nil];
-        [XSPrint line:[NSString stringWithFormat:@"build %s%d", BUILD_VERSION, BUILD_NUMBER]];
+        XSRuntime *app = [[XSRuntime alloc] initWitPath:path];
+        
+        if (!app) return sev(XSObjCError);
+        
+        [app version];
         
         return 0;
     }

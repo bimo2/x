@@ -75,7 +75,12 @@ int main(int argc, const char *argv[]) {
         XSRuntime *app = [[XSRuntime alloc] initWitPath:path];
         
         if (!app) return sev(XSObjCError);
-        if (argc < 2) return 0;
+        
+        if (argc < 2) {
+            [app docs];
+            
+            return 0;
+        }
         
         NSString *command = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
         NSMutableArray *options = NSMutableArray.array;

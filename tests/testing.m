@@ -32,10 +32,10 @@
     
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
-    // find config file in:
-    // - /
-    //   - x.json
-    //   > sh ./x
+    // files:
+    // - x.json
+    
+    // > sh ./x
     char *xpath = NULL;
     
     find(&xpath);
@@ -57,10 +57,10 @@
     
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
-    // find config file in:
-    // - /
-    //   - x.json5
-    //   > sh ./x
+    // files:
+    // - x.json5
+    
+    // > sh ./x
     char *xpath = NULL;
     
     find(&xpath);
@@ -85,11 +85,10 @@
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
     [self.manager changeCurrentDirectoryPath:directory];
     
-    // find config file in:
-    // - /
-    //   - x.json5
-    //   - folder/
-    //     > sh ./x
+    // files:
+    // - x.json5
+    
+    // > ./folder/x
     char *xpath = NULL;
     
     find(&xpath);
@@ -116,17 +115,16 @@
     [self.manager createFileAtPath:gitFile contents:nil attributes:nil];
     [self.manager changeCurrentDirectoryPath:directory];
     
-    // find config file in:
-    // - /
-    //   - x.json5
-    //   - folder/
-    //     - .git
-    //     > sh ./x
+    // files:
+    // - x.json5
+    // - folder/.git
+    
+    // > ./folder/x
     char *xpath = NULL;
     
     find(&xpath);
     
-    if (xpath) XCTAssert(false);
+    XCTAssert(xpath == NULL);
     
     __weak Tests *weakSelf = self;
     
@@ -134,14 +132,6 @@
         [weakSelf.manager removeItemAtPath:file error:nil];
         [weakSelf.manager removeItemAtPath:gitFile error:nil];
         free(xpath);
-    }];
-}
-
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
     }];
 }
 

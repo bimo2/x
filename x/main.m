@@ -75,8 +75,18 @@ int main(int argc, const char *argv[]) {
         XSRuntime *app = [[XSRuntime alloc] initWitPath:path];
         
         if (!app) return sev(XSObjCError);
+        if (argc < 2) return 0;
         
-        [app version];
+        NSString *command = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
+        NSMutableArray *options = NSMutableArray.array;
+        
+        for (int i = 2; i < argc; i++) {
+            NSString *value = [NSString stringWithCString:argv[i] encoding:NSUTF8StringEncoding];
+            
+            [options addObject:value];
+        }
+        
+        if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"]) [app version];
         
         return 0;
     }

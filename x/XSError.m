@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "XSError.h"
 
 @implementation NSError (XSError)

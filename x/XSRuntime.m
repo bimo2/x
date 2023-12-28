@@ -29,8 +29,10 @@
 
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error {
     NSString *file = [fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
+    NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, fileManager.currentDirectoryPath.lastPathComponent];
     
-    [@TEMPLATE_JSON5 writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:error];
+    [template writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:error];
+    [XSPrint line:[NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @X_DOCS_URL]];
 }
 
 - (void)version {

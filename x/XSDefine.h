@@ -11,6 +11,8 @@
 #define X_JSON "x.json"
 #define X_JSON5 "x.json5"
 
+#define X_DOCS_URL "https://json5.dev"
+
 #define VERSION "0.1"
 #define BUILD_VERSION "1A"
 

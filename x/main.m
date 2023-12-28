@@ -92,13 +92,15 @@ int main(int argc, const char *argv[]) {
             [options addObject:value];
         }
         
-        if (!app.path && [command isEqualToString:@"init"])
+        if ([command hasPrefix:@"http"] && [command hasSuffix:@".git"])
+            [app cloneGitRepositoryWithURL:command error:&error];
+        else if (!app.path && [command isEqualToString:@"init"])
             [app createJSON5WithFileManager:NSFileManager.defaultManager error:&error];
         else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"])
             [app version];
         
         if (error) {
-            [XSPrint failure:error.userInfo.description prefix:nil];
+            [XSPrint failure:error.localizedDescription prefix:nil];
             
             return (int) error.code;
         }

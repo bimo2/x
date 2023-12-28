@@ -27,6 +27,32 @@
     [XSPrint line:@"--version, -v"];
 }
 
+- (void)cloneGitRepositoryWithURL:(NSString *)url error:(NSError **)error {
+    NSURL *gitURL = [NSURL URLWithString:url];
+    
+    if (!gitURL || !gitURL.scheme || !gitURL.host) {
+        *error = [NSError errorWithCode:XSGitError reason:@"invalid git url"];
+        
+        return;
+    }
+    
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    NSURL *pathURL = [fileManager.homeDirectoryForCurrentUser URLByAppendingPathComponent:gitURL.host];
+    
+    [fileManager createDirectoryAtURL:pathURL withIntermediateDirectories:YES attributes:nil error:error];
+    [fileManager changeCurrentDirectoryPath:pathURL.path];
+    
+    NSInteger code = system([NSString stringWithFormat:@"git clone %@", url].UTF8String);
+    
+    if (code) {
+        *error = [NSError errorWithCode:XSGitError reason:[NSString stringWithFormat:@"failed to clone: %@", url]];
+        
+        return;
+    }
+    
+    [XSPrint line:[NSString stringWithFormat:@"`cd $HOME/%@/%@`", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension]];
+}
+
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error {
     NSString *file = [fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
     NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, fileManager.currentDirectoryPath.lastPathComponent];

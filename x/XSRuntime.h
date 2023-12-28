@@ -16,6 +16,8 @@
 
 - (void)docs;
 
+- (void)cloneGitRepositoryWithURL:(NSString *)url error:(NSError **)error;
+
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error;
 
 - (void)version;

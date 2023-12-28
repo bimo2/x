@@ -14,7 +14,7 @@
 @interface Tests : XCTestCase
 
 @property (nonatomic) NSBundle *bundle;
-@property (nonatomic) NSFileManager *manager;
+@property (nonatomic) NSFileManager *fileManager;
 
 @end
 
@@ -22,13 +22,13 @@
 
 - (void)setUp {
     _bundle = [NSBundle bundleForClass:self.class];
-    _manager = NSFileManager.defaultManager;
+    _fileManager = NSFileManager.defaultManager;
 }
 
 - (void)test_findConfigurationFile_json {
     NSURL *url = [self.bundle URLForResource:@"x" withExtension:@"json"];
     NSString *json = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    NSString *file = [self.manager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON];
+    NSString *file = [self.fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON];
     
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
@@ -45,7 +45,7 @@
     __weak Tests *weakSelf = self;
     
     [self addTeardownBlock:^{
-        [weakSelf.manager removeItemAtPath:file error:nil];
+        [weakSelf.fileManager removeItemAtPath:file error:nil];
         free(xpath);
     }];
 }
@@ -70,7 +70,7 @@
     __weak Tests *weakSelf = self;
     
     [self addTeardownBlock:^{
-        [weakSelf.manager removeItemAtPath:file error:nil];
+        [weakSelf.fileManager removeItemAtPath:file error:nil];
         free(xpath);
     }];
 }
@@ -78,12 +78,12 @@
 - (void)test_findConfigurationFile_recursive {
     NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"x" withExtension:@"json5"];
     NSString *json = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    NSString *directory = [self.manager.currentDirectoryPath stringByAppendingPathComponent:@"/folder"];
-    NSString *file = [self.manager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
+    NSString *directory = [self.fileManager.currentDirectoryPath stringByAppendingPathComponent:@"/folder"];
+    NSString *file = [self.fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
     
-    [self.manager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    [self.fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    [self.manager changeCurrentDirectoryPath:directory];
+    [self.fileManager changeCurrentDirectoryPath:directory];
     
     // files:
     // - x.json5
@@ -98,7 +98,7 @@
     __weak Tests *weakSelf = self;
     
     [self addTeardownBlock:^{
-        [weakSelf.manager removeItemAtPath:file error:nil];
+        [weakSelf.fileManager removeItemAtPath:file error:nil];
         free(xpath);
     }];
 }
@@ -106,14 +106,14 @@
 - (void)test_findConfigurationFile_git {
     NSURL *url = [[NSBundle bundleForClass:self.class] URLForResource:@"x" withExtension:@"json5"];
     NSString *json = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    NSString *directory = [self.manager.currentDirectoryPath stringByAppendingPathComponent:@"/folder"];
-    NSString *file = [self.manager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
+    NSString *directory = [self.fileManager.currentDirectoryPath stringByAppendingPathComponent:@"/folder"];
+    NSString *file = [self.fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
     NSString *gitFile = [directory stringByAppendingPathComponent:@".git"];
     
-    [self.manager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    [self.fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
     [json writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    [self.manager createFileAtPath:gitFile contents:nil attributes:nil];
-    [self.manager changeCurrentDirectoryPath:directory];
+    [self.fileManager createFileAtPath:gitFile contents:nil attributes:nil];
+    [self.fileManager changeCurrentDirectoryPath:directory];
     
     // files:
     // - x.json5
@@ -129,10 +129,19 @@
     __weak Tests *weakSelf = self;
     
     [self addTeardownBlock:^{
-        [weakSelf.manager removeItemAtPath:file error:nil];
-        [weakSelf.manager removeItemAtPath:gitFile error:nil];
+        [weakSelf.fileManager removeItemAtPath:file error:nil];
+        [weakSelf.fileManager removeItemAtPath:gitFile error:nil];
         free(xpath);
     }];
+}
+
+- (void)test_defaultJSON5ConfigurationFile_valid {
+    NSError *error;
+    NSJSONReadingOptions options = NSJSONReadingJSON5Allowed | NSJSONReadingTopLevelDictionaryAssumed;
+    id json = [NSJSONSerialization JSONObjectWithData:[@TEMPLATE_JSON5 dataUsingEncoding:NSUTF8StringEncoding] options:options error:&error];
+    
+    XCTAssertNil(error);
+    XCTAssert([json isKindOfClass:NSDictionary.class]);
 }
 
 @end

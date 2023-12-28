@@ -17,14 +17,14 @@
 
 int find(char **url) {
     NSArray *extensions = @[ @X_JSON, @X_JSON5 ];
-    NSFileManager *manager = NSFileManager.defaultManager;
-    NSString *path = manager.currentDirectoryPath;
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    NSString *path = fileManager.currentDirectoryPath;
     NSString *lastPath;
     NSError *error;
     BOOL isGitPath = NO;
     
     while (!isGitPath && ![path isEqualToString:lastPath]) {
-        NSArray *directory = [manager contentsOfDirectoryAtPath:path error:&error];
+        NSArray *directory = [fileManager contentsOfDirectoryAtPath:path error:&error];
         
         if (error) return XSPathError;
         
@@ -82,6 +82,7 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
         
+        NSError *error;
         NSString *command = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
         NSMutableArray *options = NSMutableArray.array;
         
@@ -91,7 +92,16 @@ int main(int argc, const char *argv[]) {
             [options addObject:value];
         }
         
-        if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"]) [app version];
+        if (!app.path && [command isEqualToString:@"init"])
+            [app createJSON5WithFileManager:NSFileManager.defaultManager error:&error];
+        else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"])
+            [app version];
+        
+        if (error) {
+            [XSPrint failure:error.userInfo.description prefix:nil];
+            
+            return (int) error.code;
+        }
         
         return 0;
     }

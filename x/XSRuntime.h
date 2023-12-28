@@ -10,9 +10,13 @@
 
 @interface XSRuntime : NSObject
 
+@property (nonatomic, copy) NSString *path;
+
 - (instancetype)initWitPath:(NSString *)path;
 
 - (void)docs;
+
+- (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error;
 
 - (void)version;
 

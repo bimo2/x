@@ -1,1 +1,30 @@
-x: json5
+_x: 0,
+repo: 'x',
+dependencies: {
+  git: 'git',
+  xcode: [
+    'xcrun',
+    'xcodebuild'
+  ]
+},
+scripts: {
+  install: {
+    info: 'install ...',
+    run: [
+      'echo download #host -> 127.0.0.1#/sdk',
+      'echo install -a'
+    ]
+  },
+  start: {
+    info: 'start ...',
+    run: 'echo server -p #port -> 4000#'
+  },
+  build: {
+    info: 'build ...',
+    run: 'echo build -o #bin!#'
+  },
+  test: {
+    info: 'test ...',
+    run: 'echo test #suite#'
+  }
+}

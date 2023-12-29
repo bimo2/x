@@ -15,6 +15,8 @@
 
 - (instancetype)initWithInfo:(NSString *)info commands:(NSArray *)commands;
 
+- (NSString *)signatureWithName:(NSString *)name;
+
 @end
 
 #endif /* XSSCRIPT_H */

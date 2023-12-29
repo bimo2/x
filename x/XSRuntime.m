@@ -10,6 +10,7 @@
 #import "XSDefine.h"
 #import "XSError.h"
 #import "XSPrint.h"
+#import "XSScript.h"
 
 #import "XSRuntime.h"
 
@@ -33,8 +34,8 @@
     [XSPrint info:[NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"] prefix:nil];
     
     if (self.context) {
-        for (NSString *script in self.context.scripts.allKeys) {
-            [XSPrint line:script];
+        for (NSString *name in self.context.scripts.allKeys) {
+            [XSPrint line:[(XSScript *) self.context.scripts[name] signatureWithName:name]];
         }
     } else {
         [XSPrint line:@"<url>            clone git repository"];

@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XSCompiler.h"
 #import "XSContext.h"
 #import "XSDefine.h"
 #import "XSError.h"
@@ -86,6 +87,43 @@
 #endif
     
     [XSPrint line:[NSString stringWithFormat:@"x/%@ %s (%s%d)", arch, VERSION, BUILD_VERSION, BUILD_NUMBER]];
+}
+
+- (void)runScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
+    if (!self.context) {
+        [XSPrint warning:[NSString stringWithFormat:@"`%@` not found", @X_JSON5] prefix:nil];
+        
+        return;
+    }
+    
+    XSScript *script = self.context.scripts[name];
+    
+    if (!script) {
+        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"undefined script: %@", name]];
+        
+        return;
+    }
+    
+    NSDate *start = NSDate.date;
+    NSArray *lines = [XSCompiler compileScript:script options:options error:error];
+    
+    if (*error) return;
+    
+    for (NSString *line in lines) {
+        [XSPrint info:line prefix:name];
+        
+        NSInteger code = system([NSString stringWithFormat:@"cd %@ && sh -c '%@'", self.path.stringByDeletingLastPathComponent, line].UTF8String);
+        
+        if (code) {
+            *error = [NSError errorWithCode:code reason:[NSString stringWithFormat:@"failed (%li)", code]];
+            
+            return;
+        }
+    }
+    
+    NSNumber *elapsed = [NSNumber numberWithDouble:start.timeIntervalSinceNow * -1];
+    
+    [XSPrint success:[NSString stringWithFormat:@"%.3fs", elapsed.doubleValue] prefix:nil];
 }
 
 @end

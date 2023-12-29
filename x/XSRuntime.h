@@ -22,6 +22,8 @@
 
 - (void)version;
 
+- (void)runScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error;
+
 @end
 
 #endif /* XSRUNTIME_H */

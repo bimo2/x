@@ -24,6 +24,7 @@
 		37A3A1EE2B3F27840000F0FC /* XSScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1EB2B3F26D10000F0FC /* XSScript.m */; };
 		37A3A1F02B3F36BD0000F0FC /* XSToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1EF2B3F36BD0000F0FC /* XSToken.m */; };
 		37A3A1F22B3F3C0A0000F0FC /* XSToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1EF2B3F36BD0000F0FC /* XSToken.m */; };
+		37A3A1F42B3F50D20000F0FC /* XSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1F32B3F50D20000F0FC /* XSCompiler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,8 @@
 		37A3A1ED2B3F26DE0000F0FC /* XSScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSScript.h; sourceTree = "<group>"; };
 		37A3A1EF2B3F36BD0000F0FC /* XSToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSToken.m; sourceTree = "<group>"; };
 		37A3A1F12B3F36C80000F0FC /* XSToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSToken.h; sourceTree = "<group>"; };
+		37A3A1F32B3F50D20000F0FC /* XSCompiler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSCompiler.m; sourceTree = "<group>"; };
+		37A3A1F52B3F50E00000F0FC /* XSCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSCompiler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,8 @@
 		37A3A1982B34701C0000F0FC /* x */ = {
 			isa = PBXGroup;
 			children = (
+				37A3A1F52B3F50E00000F0FC /* XSCompiler.h */,
+				37A3A1F32B3F50D20000F0FC /* XSCompiler.m */,
 				37A3A1E72B3DDAD30000F0FC /* XSContext.h */,
 				37A3A1E82B3DDAE30000F0FC /* XSContext.m */,
 				37A3A1C32B38DC3F0000F0FC /* XSDefine.h */,
@@ -232,6 +237,7 @@
 				37A3A1BF2B3775860000F0FC /* XSPrint.m in Sources */,
 				37A3A1EC2B3F26D10000F0FC /* XSScript.m in Sources */,
 				37A3A1BB2B372EC30000F0FC /* XSError.m in Sources */,
+				37A3A1F42B3F50D20000F0FC /* XSCompiler.m in Sources */,
 				37A3A1F02B3F36BD0000F0FC /* XSToken.m in Sources */,
 				37A3A1E92B3DDAE30000F0FC /* XSContext.m in Sources */,
 			);

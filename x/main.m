@@ -103,6 +103,8 @@ int main(int argc, const char *argv[]) {
             [app createJSON5WithFileManager:NSFileManager.defaultManager error:&error];
         else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"])
             [app version];
+        else
+            [app runScriptWithName:command options:options error:&error];
         
         if (error) return fail((int) error.code, error.localizedDescription.UTF8String);
         

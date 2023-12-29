@@ -15,6 +15,7 @@
 
 #define VERSION "0.1"
 #define BUILD_VERSION "1A"
+#define COMPILER_VERSION 0
 
 #ifndef BUILD_NUMBER
 #define BUILD_NUMBER 1

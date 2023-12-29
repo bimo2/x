@@ -48,8 +48,12 @@ int find(char **url) {
     return 0;
 }
 
-int sev(int code) {
-    [XSPrint failure:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
+int fail(int code, const char *description) {
+    if (description) {
+        [XSPrint failure:[NSString stringWithCString:description encoding:NSUTF8StringEncoding] prefix:nil];
+    } else {
+        [XSPrint failure:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
+    }
     
     return code;
 }
@@ -62,9 +66,10 @@ int main(int argc, const char *argv[]) {
         if (code) {
             free(url);
             
-            return sev(code);
+            return fail(code, NULL);
         };
         
+        NSError *error;
         NSString *path;
         
         if (url) {
@@ -72,9 +77,10 @@ int main(int argc, const char *argv[]) {
             free(url);
         }
         
-        XSRuntime *app = [[XSRuntime alloc] initWitPath:path];
+        XSRuntime *app = [[XSRuntime alloc] initWitPath:path error:&error];
         
-        if (!app) return sev(XSObjCError);
+        if (error) return fail((int) error.code, error.localizedDescription.UTF8String);
+        if (!app) return fail(XSObjCError, NULL);
         
         if (argc < 2) {
             [app docs];
@@ -82,7 +88,6 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
         
-        NSError *error;
         NSString *command = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
         NSMutableArray *options = NSMutableArray.array;
         
@@ -99,11 +104,7 @@ int main(int argc, const char *argv[]) {
         else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"])
             [app version];
         
-        if (error) {
-            [XSPrint failure:error.localizedDescription prefix:nil];
-            
-            return (int) error.code;
-        }
+        if (error) return fail((int) error.code, error.localizedDescription.UTF8String);
         
         return 0;
     }

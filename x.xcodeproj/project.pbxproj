@@ -18,6 +18,8 @@
 		37A3A1DF2B3B799D0000F0FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1992B34701C0000F0FC /* main.m */; };
 		37A3A1E42B3B89820000F0FC /* x.json5 in Resources */ = {isa = PBXBuildFile; fileRef = 37A3A1E22B3B7EF00000F0FC /* x.json5 */; };
 		37A3A1E62B3B8DF40000F0FC /* x.json in Resources */ = {isa = PBXBuildFile; fileRef = 37A3A1E52B3B8DF40000F0FC /* x.json */; };
+		37A3A1E92B3DDAE30000F0FC /* XSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1E82B3DDAE30000F0FC /* XSContext.m */; };
+		37A3A1EA2B3DDAF70000F0FC /* XSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1E82B3DDAE30000F0FC /* XSContext.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +49,8 @@
 		37A3A1D72B3B77770000F0FC /* testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testing.h; sourceTree = "<group>"; };
 		37A3A1E22B3B7EF00000F0FC /* x.json5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = x.json5; sourceTree = "<group>"; };
 		37A3A1E52B3B8DF40000F0FC /* x.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = x.json; sourceTree = "<group>"; };
+		37A3A1E72B3DDAD30000F0FC /* XSContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSContext.h; sourceTree = "<group>"; };
+		37A3A1E82B3DDAE30000F0FC /* XSContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSContext.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 		37A3A1982B34701C0000F0FC /* x */ = {
 			isa = PBXGroup;
 			children = (
+				37A3A1E72B3DDAD30000F0FC /* XSContext.h */,
+				37A3A1E82B3DDAE30000F0FC /* XSContext.m */,
 				37A3A1C32B38DC3F0000F0FC /* XSDefine.h */,
 				37A3A1BC2B372F770000F0FC /* XSError.h */,
 				37A3A1BA2B372EC30000F0FC /* XSError.m */,
@@ -213,6 +219,7 @@
 				37A3A1C22B37FBF80000F0FC /* XSRuntime.m in Sources */,
 				37A3A1BF2B3775860000F0FC /* XSPrint.m in Sources */,
 				37A3A1BB2B372EC30000F0FC /* XSError.m in Sources */,
+				37A3A1E92B3DDAE30000F0FC /* XSContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A3A1EA2B3DDAF70000F0FC /* XSContext.m in Sources */,
 				37A3A1DA2B3B799D0000F0FC /* XSError.m in Sources */,
 				37A3A1DC2B3B799D0000F0FC /* XSPrint.m in Sources */,
 				37A3A1DE2B3B799D0000F0FC /* XSRuntime.m in Sources */,

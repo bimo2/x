@@ -6,22 +6,31 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XSContext.h"
 #import "XSDefine.h"
 #import "XSError.h"
 #import "XSPrint.h"
 
 #import "XSRuntime.h"
 
+@interface XSRuntime ()
+
+@property (nonatomic) XSContext *context;
+
+@end
+
 @implementation XSRuntime
 
-- (instancetype)initWitPath:(NSString *)path {
+- (instancetype)initWitPath:(NSString *)path error:(NSError **)error {
     _path = path;
+    
+    if (path) _context = [[XSContext alloc] initWithData:[NSData dataWithContentsOfFile:path] error:error];
     
     return self;
 }
 
 - (void)docs {
-    [XSPrint info:[NSString stringWithFormat:@"%@\n-", nil] prefix:nil];
+    [XSPrint info:[NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"] prefix:nil];
     [XSPrint line:@"<url>            clone git repository"];
     [XSPrint line:@"init             create `x.json5` file"];
     [XSPrint line:@"--version, -v"];

@@ -12,6 +12,7 @@ enum {
     XSObjCError = 100,
     XSPathError,
     XSGitError,
+    XSSyntaxError,
     XSRuntimeError,
 };
 

@@ -17,10 +17,8 @@
     NSJSONReadingOptions options = NSJSONReadingJSON5Allowed | NSJSONReadingTopLevelDictionaryAssumed;
     id json = [NSJSONSerialization JSONObjectWithData:data options:options error:error];
     
-    if (*error) return nil;
-    
-    if (![json isKindOfClass:NSDictionary.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 object"];
+    if (*error || ![json isKindOfClass:NSDictionary.class]) {
+        *error = [NSError errorWithCode:XSSyntaxError reason:@"invalid JSON5 object"];
         
         return nil;
     }
@@ -44,7 +42,57 @@
         return nil;
     }
     
-    _repo = repo ?: @"";
+    _repo = repo;
+    
+    id dependencies = object[@"dependencies"];
+    
+    if (!dependencies) {
+        _dependencies = NSDictionary.dictionary;
+    } else if (![dependencies isKindOfClass:NSDictionary.class]) {
+        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 object: dependencies"];
+        
+        return nil;
+    } else {
+        NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithDictionary:dependencies];
+        
+        for (NSString *key in copy.allKeys) {
+            if ([copy[key] isKindOfClass:NSString.class]) {
+                if ([(NSString *) copy[key] length] == 0) {
+                    *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: dependencies.%@", key]];
+                    
+                    return nil;
+                }
+                
+                NSArray *array = @[[NSString stringWithString:copy[key]]];
+                
+                [copy setObject:array forKey:key];
+                
+                continue;
+            } else if ([copy[key] isKindOfClass:NSArray.class]) {
+                NSArray *array = dependencies[key];
+                
+                if (!array.count) {
+                    *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 array: dependencies.%@", key]];
+                    
+                    return nil;
+                }
+                
+                for (NSObject *item in array) {
+                    if (![item isKindOfClass:NSString.class]) {
+                        *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: dependencies.%@", key]];
+                        
+                        return nil;
+                    }
+                }
+                
+                continue;
+            }
+            
+            *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string|array: dependencies.%@", key]];
+        }
+        
+        _dependencies = [NSDictionary dictionaryWithDictionary:copy];
+    }
     
     return self;
 }

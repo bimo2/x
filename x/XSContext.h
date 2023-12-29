@@ -10,8 +10,9 @@
 
 @interface XSContext : NSObject
 
-@property (nonatomic) NSInteger version;
-@property (nonatomic, copy) NSString *repo;
+@property (nonatomic, readonly) NSInteger version;
+@property (nonatomic, copy, readonly) NSString *repo;
+@property (nonatomic, readonly) NSDictionary *dependencies;
 
 - (instancetype)initWithData:(NSData *)data error:(NSError **)error;
 

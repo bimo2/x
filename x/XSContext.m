@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "XSDefine.h"
 #import "XSError.h"
+#import "XSScript.h"
 
 #import "XSContext.h"
 
@@ -89,9 +90,70 @@
             }
             
             *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string|array: dependencies.%@", key]];
+            
+            return nil;
         }
         
         _dependencies = [NSDictionary dictionaryWithDictionary:copy];
+    }
+    
+    id scripts = object[@"scripts"];
+    
+    if (!scripts) {
+        _scripts = NSDictionary.dictionary;
+    } else if (![scripts isKindOfClass:NSDictionary.class]) {
+        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 object: scripts"];
+        
+        return nil;
+    } else {
+        NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithDictionary:scripts];
+        
+        for (NSString *key in copy.allKeys) {
+            if (![copy[key] isKindOfClass:NSDictionary.class]) {
+                *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 object: scripts.%@", key]];
+                
+                return nil;
+            }
+            
+            id info = scripts[key][@"info"];
+            id commands = scripts[key][@"run"];
+            
+            if (info && ![info isKindOfClass:NSString.class]) {
+                *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: scripts.%@.info", key]];
+                
+                return nil;
+            }
+            
+            if ([commands isKindOfClass:NSString.class]) {
+                XSScript *script = [[XSScript alloc] initWithInfo:info commands:@[ commands ]];
+                
+                [copy setObject:script forKey:key];
+                
+                continue;
+            }
+            
+            if ([commands isKindOfClass:NSArray.class]) {
+                for (NSObject *item in commands) {
+                    if (![item isKindOfClass:NSString.class]) {
+                        *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: scripts.%@.run", key]];
+                        
+                        return nil;
+                    }
+                }
+                
+                XSScript *script = [[XSScript alloc] initWithInfo:info commands:commands];
+                
+                [copy setObject:script forKey:key];
+                
+                continue;
+            }
+            
+            *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string|array: scripts.%@.run", key]];
+            
+            return nil;
+        }
+        
+        _scripts = [NSDictionary dictionaryWithDictionary:copy];
     }
     
     return self;

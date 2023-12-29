@@ -31,9 +31,16 @@
 
 - (void)docs {
     [XSPrint info:[NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"] prefix:nil];
-    [XSPrint line:@"<url>            clone git repository"];
-    [XSPrint line:@"init             create `x.json5` file"];
-    [XSPrint line:@"--version, -v"];
+    
+    if (self.context) {
+        for (NSString *script in self.context.scripts.allKeys) {
+            [XSPrint line:script];
+        }
+    } else {
+        [XSPrint line:@"<url>            clone git repository"];
+        [XSPrint line:@"init             create `x.json5` file"];
+        [XSPrint line:@"--version, -v"];
+    }
 }
 
 - (void)cloneGitRepositoryWithURL:(NSString *)url error:(NSError **)error {

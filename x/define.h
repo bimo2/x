@@ -1,24 +1,24 @@
 //
-//  XSDefine.h
+//  define.h
 //  x
 //
 //  Created by Bimal Bhagrath on 2023-12-24.
 //
 
-#ifndef XSDEFINE_H
-#define XSDEFINE_H
+#ifndef DEFINE_H
+#define DEFINE_H
 
 #define X_JSON "x.json"
 #define X_JSON5 "x.json5"
 
-#define X_DOCS_URL "https://json5.dev"
+#define DOCS_URL "https://json5.dev"
 
 #define VERSION "0.1"
 #define BUILD_VERSION "1A"
 #define COMPILER_VERSION 0
 
 #ifndef BUILD_NUMBER
-#define BUILD_NUMBER 1
+#define BUILD_NUMBER 0
 #endif
 
 #define TEMPLATE_JSON5 \
@@ -53,4 +53,4 @@
 "  }\n" \
 "}\n"
 
-#endif /* XSDEFINE_H */
+#endif // DEFINE_H

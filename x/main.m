@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XSDefine.h"
+#import "define.h"
 #import "XSError.h"
 #import "XSPrint.h"
 #import "XSRuntime.h"

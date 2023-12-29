@@ -19,4 +19,4 @@
 
 @end
 
-#endif /* XSSCRIPT_H */
+#endif // XSSCRIPT_H

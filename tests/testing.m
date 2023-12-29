@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import <Foundation/Foundation.h>
-#import "XSDefine.h"
+#import "define.h"
 
 #import "testing.h"
 

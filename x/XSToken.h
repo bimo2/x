@@ -20,4 +20,4 @@
 
 @end
 
-#endif /* XSTOKEN_H */
+#endif // XSTOKEN_H

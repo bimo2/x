@@ -22,4 +22,4 @@ enum {
 
 @end
 
-#endif /* XSERROR_H */
+#endif // XSERROR_H

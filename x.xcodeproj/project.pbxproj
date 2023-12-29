@@ -25,6 +25,7 @@
 		37A3A1F02B3F36BD0000F0FC /* XSToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1EF2B3F36BD0000F0FC /* XSToken.m */; };
 		37A3A1F22B3F3C0A0000F0FC /* XSToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1EF2B3F36BD0000F0FC /* XSToken.m */; };
 		37A3A1F42B3F50D20000F0FC /* XSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1F32B3F50D20000F0FC /* XSCompiler.m */; };
+		37A3A1F62B3F5F870000F0FC /* XSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A3A1F32B3F50D20000F0FC /* XSCompiler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,7 +51,7 @@
 		37A3A1BE2B3775860000F0FC /* XSPrint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSPrint.m; sourceTree = "<group>"; };
 		37A3A1C02B37FBE90000F0FC /* XSRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSRuntime.h; sourceTree = "<group>"; };
 		37A3A1C12B37FBF80000F0FC /* XSRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XSRuntime.m; sourceTree = "<group>"; };
-		37A3A1C32B38DC3F0000F0FC /* XSDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XSDefine.h; sourceTree = "<group>"; };
+		37A3A1C32B38DC3F0000F0FC /* define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = define.h; sourceTree = "<group>"; };
 		37A3A1D72B3B77770000F0FC /* testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testing.h; sourceTree = "<group>"; };
 		37A3A1E22B3B7EF00000F0FC /* x.json5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = x.json5; sourceTree = "<group>"; };
 		37A3A1E52B3B8DF40000F0FC /* x.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = x.json; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 				37A3A1F32B3F50D20000F0FC /* XSCompiler.m */,
 				37A3A1E72B3DDAD30000F0FC /* XSContext.h */,
 				37A3A1E82B3DDAE30000F0FC /* XSContext.m */,
-				37A3A1C32B38DC3F0000F0FC /* XSDefine.h */,
 				37A3A1BC2B372F770000F0FC /* XSError.h */,
 				37A3A1BA2B372EC30000F0FC /* XSError.m */,
 				37A3A1BD2B3767310000F0FC /* XSPrint.h */,
@@ -118,6 +118,7 @@
 				37A3A1EB2B3F26D10000F0FC /* XSScript.m */,
 				37A3A1F12B3F36C80000F0FC /* XSToken.h */,
 				37A3A1EF2B3F36BD0000F0FC /* XSToken.m */,
+				37A3A1C32B38DC3F0000F0FC /* define.h */,
 				37A3A1992B34701C0000F0FC /* main.m */,
 			);
 			path = x;
@@ -247,14 +248,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37A3A1F22B3F3C0A0000F0FC /* XSToken.m in Sources */,
-				37A3A1EE2B3F27840000F0FC /* XSScript.m in Sources */,
-				37A3A1EA2B3DDAF70000F0FC /* XSContext.m in Sources */,
-				37A3A1DA2B3B799D0000F0FC /* XSError.m in Sources */,
-				37A3A1DC2B3B799D0000F0FC /* XSPrint.m in Sources */,
-				37A3A1DE2B3B799D0000F0FC /* XSRuntime.m in Sources */,
-				37A3A1DF2B3B799D0000F0FC /* main.m in Sources */,
 				37A3A1B62B3547A20000F0FC /* testing.m in Sources */,
+				37A3A1DF2B3B799D0000F0FC /* main.m in Sources */,
+				37A3A1DE2B3B799D0000F0FC /* XSRuntime.m in Sources */,
+				37A3A1DC2B3B799D0000F0FC /* XSPrint.m in Sources */,
+				37A3A1EE2B3F27840000F0FC /* XSScript.m in Sources */,
+				37A3A1DA2B3B799D0000F0FC /* XSError.m in Sources */,
+				37A3A1F62B3F5F870000F0FC /* XSCompiler.m in Sources */,
+				37A3A1F22B3F3C0A0000F0FC /* XSToken.m in Sources */,
+				37A3A1EA2B3DDAF70000F0FC /* XSContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

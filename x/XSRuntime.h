@@ -26,4 +26,4 @@
 
 @end
 
-#endif /* XSRUNTIME_H */
+#endif // XSRUNTIME_H

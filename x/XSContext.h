@@ -19,4 +19,4 @@
 
 @end
 
-#endif /* XSCONTEXT_H */
+#endif // XSCONTEXT_H

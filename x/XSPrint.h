@@ -1,5 +1,5 @@
 //
-//  XSPrinter.h
+//  XSPrint.h
 //  x
 //
 //  Created by Bimal Bhagrath on 2023-12-23.
@@ -22,4 +22,4 @@
 
 @end
 
-#endif /* XSPRINT_H */
+#endif // XSPRINT_H

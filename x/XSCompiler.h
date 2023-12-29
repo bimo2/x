@@ -16,4 +16,4 @@
 
 @end
 
-#endif /* XSCOMPILER */
+#endif // XSCOMPILER

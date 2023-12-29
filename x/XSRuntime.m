@@ -6,9 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "define.h"
 #import "XSCompiler.h"
 #import "XSContext.h"
-#import "XSDefine.h"
 #import "XSError.h"
 #import "XSPrint.h"
 #import "XSScript.h"
@@ -76,7 +76,7 @@
     NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, fileManager.currentDirectoryPath.lastPathComponent];
     
     [template writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:error];
-    [XSPrint line:[NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @X_DOCS_URL]];
+    [XSPrint line:[NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @DOCS_URL]];
 }
 
 - (void)version {

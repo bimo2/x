@@ -12,4 +12,4 @@
 
 int find(char **url);
 
-#endif /* TESTING_H */
+#endif // TESTING_H

@@ -33,7 +33,7 @@
         return nil;
     }
     
-    _version = [version integerValue] ?: COMPILER_VERSION;
+    _version = [version integerValue] ?: COMPILER;
     
     id repo = object[@"repo"];
     

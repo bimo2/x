@@ -10,7 +10,6 @@
 #import "XSCompiler.h"
 #import "XSContext.h"
 #import "XSError.h"
-#import "XSPrint.h"
 #import "XSScript.h"
 
 #import "XSRuntime.h"
@@ -32,16 +31,16 @@
 }
 
 - (void)docs {
-    [XSPrint info:[NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"] prefix:nil];
+    PRINT_INFO(@"x".UTF8String, ([NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"]).UTF8String);
     
     if (self.context) {
         for (NSString *name in self.context.scripts.allKeys) {
-            [XSPrint line:[(XSScript *) self.context.scripts[name] signatureWithName:name]];
+            PRINT([(XSScript *) self.context.scripts[name] signatureWithName:name].UTF8String);
         }
     } else {
-        [XSPrint line:@"<url>            clone git repository"];
-        [XSPrint line:@"init             create `x.json5` file"];
-        [XSPrint line:@"--version, -v"];
+        PRINT(@"<url>            clone git repository".UTF8String);
+        PRINT(@"init             create `x.json5` file".UTF8String);
+        PRINT(@"--version, -v".UTF8String);
     }
 }
 
@@ -68,7 +67,7 @@
         return;
     }
     
-    [XSPrint line:[NSString stringWithFormat:@"`cd $HOME/%@/%@`", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension]];
+    PRINT(([NSString stringWithFormat:@"`cd $HOME/%@/%@`", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension]).UTF8String);
 }
 
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error {
@@ -76,7 +75,7 @@
     NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, fileManager.currentDirectoryPath.lastPathComponent];
     
     [template writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:error];
-    [XSPrint line:[NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @DOCS_URL]];
+    PRINT(([NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @DOCS_URL]).UTF8String);
 }
 
 - (void)version {
@@ -86,12 +85,12 @@
     NSString *arch = @"intel";
 #endif
     
-    [XSPrint line:[NSString stringWithFormat:@"x/%@ %s (%s%d)", arch, VERSION, BUILD_VERSION, BUILD_NUMBER]];
+    PRINT(([NSString stringWithFormat:@"x/%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER]).UTF8String);
 }
 
 - (void)runScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
     if (!self.context) {
-        [XSPrint warning:[NSString stringWithFormat:@"`%@` not found", @X_JSON5] prefix:nil];
+        PRINT_STATUS(XSRuntimeError, ([NSString stringWithFormat:@"`%@` not found", @X_JSON5]).UTF8String);
         
         return;
     }
@@ -110,7 +109,7 @@
     if (*error) return;
     
     for (NSString *line in lines) {
-        [XSPrint info:line prefix:name];
+        PRINT_INFO(name.UTF8String, line.UTF8String);
         
         NSInteger code = system([NSString stringWithFormat:@"cd %@ && sh -c '%@'", self.path.stringByDeletingLastPathComponent, line].UTF8String);
         
@@ -123,7 +122,7 @@
     
     NSNumber *elapsed = [NSNumber numberWithDouble:start.timeIntervalSinceNow * -1];
     
-    [XSPrint success:[NSString stringWithFormat:@"%.3fs", elapsed.doubleValue] prefix:nil];
+    PRINT_STATUS(0, ([NSString stringWithFormat:@"%.3fs", elapsed.doubleValue]).UTF8String);
 }
 
 @end

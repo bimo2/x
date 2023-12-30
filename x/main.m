@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 #import "define.h"
 #import "XSError.h"
-#import "XSPrint.h"
 #import "XSRuntime.h"
 
 #ifdef TESTING
@@ -50,9 +49,9 @@ int find(char **url) {
 
 int fail(int code, const char *description) {
     if (description) {
-        [XSPrint failure:[NSString stringWithCString:description encoding:NSUTF8StringEncoding] prefix:nil];
+        PRINT_STATUS(code, description);
     } else {
-        [XSPrint failure:[NSString stringWithFormat:@"(%d)", code] prefix:nil];
+        PRINT_STATUS(code, ([NSString stringWithFormat:@"(%d)", code]).UTF8String);
     }
     
     return code;

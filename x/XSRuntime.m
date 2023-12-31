@@ -35,8 +35,9 @@
 }
 
 - (void)documentation {
-    PRINT_HEADER((self.context.project ?: @"null").UTF8String);
-    PRINT("--");
+    NSString *header = [NSString stringWithFormat:@"%@\n", self.context.project ?: @"null"];
+    
+    PRINT_HEADER(header.UTF8String);
     
     if (self.context) {
         NSInteger maxLength = 0;
@@ -49,14 +50,20 @@
         
         for (XSScript *script in self.context.scripts) {
             NSString *leading = [script.signature stringByPaddingToLength:maxLength + 4 withString:@" " startingAtIndex:0];
-            NSString *line = [leading stringByAppendingString:script.info];
+            NSString *line = [leading stringByAppendingString:script.info ?: @""];
             
             PRINT(line.UTF8String);
         }
+        
+        NSInteger count = self.context.scripts.count;
+        NSString *caption = [NSString stringWithFormat:@"%@%ld %@", count > 0 ? @"\n" : @"", count, count == 1 ? @"script" : @"scripts"];
+        
+        PRINT(caption.UTF8String);
     } else {
         PRINT(@"<url>            clone git repository".UTF8String);
         PRINT(@"init             create `x.json5` file".UTF8String);
         PRINT(@"--version, -v".UTF8String);
+        PRINT(@"\n-".UTF8String);
     }
 }
 
@@ -83,15 +90,23 @@
         return;
     }
     
-    PRINT(([NSString stringWithFormat:@"`cd $HOME/%@/%@`", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension]).UTF8String);
+    NSString *command = [NSString stringWithFormat:@"cd $HOME/%@/%@", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension];
+    
+    PRINT_COMMAND(command.UTF8String);
 }
 
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error {
+    if (self.context) return;
+    
     NSString *file = [fileManager.currentDirectoryPath stringByAppendingPathComponent:@X_JSON5];
-    NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, fileManager.currentDirectoryPath.lastPathComponent];
+    NSString *project = fileManager.currentDirectoryPath.lastPathComponent;
+    NSString *template = [NSString stringWithFormat:@TEMPLATE_JSON5, project];
+    NSString *caption = [NSString stringWithFormat:@"learn more: %@", @DOCS_URL];
     
     [template writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:error];
-    PRINT(([NSString stringWithFormat:@"`%@` file created, learn more: %@", @X_JSON5, @DOCS_URL]).UTF8String);
+    PRINT_HEADER(project.UTF8String);
+    PRINT_FILE;
+    PRINT(caption.UTF8String);
 }
 
 - (void)version {
@@ -101,7 +116,9 @@
     NSString *arch = @"intel";
 #endif
     
-    PRINT(([NSString stringWithFormat:@"x\\%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER]).UTF8String);
+    NSString *string = [NSString stringWithFormat:@"x\\%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER];
+    
+    PRINT(string.UTF8String);
 }
 
 - (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {

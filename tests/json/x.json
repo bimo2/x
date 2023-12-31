@@ -1,13 +1,11 @@
 {
   "_x": 0,
-  "repo": "x",
-  "dependencies": {
-    "git": "git",
-    "xcode": [
-      "xcrun",
-      "xcodebuild"
-    ]
-  },
+  "project": "github",
+  "require": [
+    "git",
+    "nano",
+    "xcodebuild"
+  ],
   "scripts": {
     "install": {
       "info": "install ...",

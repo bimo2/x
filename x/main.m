@@ -47,12 +47,8 @@ int find(char **url) {
     return 0;
 }
 
-int fail(int code, const char *description) {
-    if (description) {
-        PRINT_STATUS(code, description);
-    } else {
-        PRINT_STATUS(code, ([NSString stringWithFormat:@"(%d)", code]).UTF8String);
-    }
+int fail(int code, const char *message) {
+    PRINT_ERROR(message);
     
     return code;
 }
@@ -60,15 +56,14 @@ int fail(int code, const char *description) {
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
         char *url = NULL;
-        int code = find(&url);
+        int status = find(&url);
         
-        if (code) {
+        if (status) {
             free(url);
             
-            return fail(code, NULL);
+            return fail(status, NULL);
         };
         
-        NSError *error;
         NSString *path;
         
         if (url) {
@@ -76,13 +71,14 @@ int main(int argc, const char *argv[]) {
             free(url);
         }
         
+        NSError *error;
         XSRuntime *app = [[XSRuntime alloc] initWitPath:path error:&error];
         
         if (error) return fail((int) error.code, error.localizedDescription.UTF8String);
         if (!app) return fail(XSObjCError, NULL);
         
         if (argc < 2) {
-            [app docs];
+            [app documentation];
             
             return 0;
         }
@@ -96,14 +92,15 @@ int main(int argc, const char *argv[]) {
             [options addObject:value];
         }
         
-        if ([command hasPrefix:@"http"] && [command hasSuffix:@".git"])
-            [app cloneGitRepositoryWithURL:command error:&error];
-        else if (!app.path && [command isEqualToString:@"init"])
+        if ([command hasPrefix:@"https://"] && [command hasSuffix:@".git"]) {
+            [app cloneGitRepositoryAtURL:command error:&error];
+        } else if (!app.path && [command isEqualToString:@"init"]) {
             [app createJSON5WithFileManager:NSFileManager.defaultManager error:&error];
-        else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"])
+        } else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"]) {
             [app version];
-        else
-            [app runScriptWithName:command options:options error:&error];
+        } else {
+            [app xScriptWithName:command options:options error:&error];
+        }
         
         if (error) return fail((int) error.code, error.localizedDescription.UTF8String);
         

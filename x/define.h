@@ -22,27 +22,19 @@
 #define DOCS_URL "https://json5.dev"
 
 #define PRINT(cstring) printf("%s\n", cstring)
-#define PRINT_INFO(title, cstring) printf("\033[1m%s\033[0m %s\n", title, cstring);
-
-#define PRINT_STATUS(status, cstring) if (status > 0) { \
-    _PRINT_1(cstring) \
-} else { \
-    _PRINT_0(cstring) \
-}
-
-#define _PRINT_0(cstring) printf("\033[1;92m\u2713\033[0;92m %s\033[0m\n", cstring);
-#define _PRINT_1(cstring) printf("\033[1;91m\u2717\033[0;91m %s\033[0m\n", cstring);
+#define PRINT_SCOPE(cstring) printf("x\\\033[1m%s\033[0m\n", cstring)
+#define PRINT_INFO(title, cstring) printf("\033[1m%s\033[0m %s\n", title, cstring)
+#define PRINT_TIME(double) printf("\033[1;92m\u2713\033[0;92m %.3fs\033[0m\n", double)
+#define PRINT_ERROR(cstring) printf("\033[1;91m\u2717\033[0;91m %s\033[0m\n", cstring)
 
 #define TEMPLATE_JSON5 \
 "_x: 0,\n" \
-"repo: '%@',\n" \
-"dependencies: {\n" \
-"  git: 'git',\n" \
-"  xcode: [\n" \
-"    'xcrun',\n" \
-"    'xcodebuild'\n" \
-"  ]\n" \
-"},\n" \
+"project: '%@',\n" \
+"require: [\n" \
+"  'git',\n" \
+"  'nano',\n" \
+"  'xcodebuild'\n" \
+"],\n" \
 "scripts: {\n" \
 "  install: {\n" \
 "    info: 'install ...',\n" \

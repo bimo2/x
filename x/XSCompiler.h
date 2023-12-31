@@ -5,8 +5,8 @@
 //  Created by Bimal Bhagrath on 2023-12-29.
 //
 
-#ifndef XSCOMPILER
-#define XSCOMPILER
+#ifndef XSCOMPILER_H
+#define XSCOMPILER_H
 
 #import "XSScript.h"
 
@@ -16,4 +16,4 @@
 
 @end
 
-#endif // XSCOMPILER
+#endif // XSCOMPILER_H

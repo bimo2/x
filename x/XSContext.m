@@ -15,86 +15,51 @@
 @implementation XSContext
 
 - (instancetype)initWithData:(NSData *)data error:(NSError **)error {
+    id (^block)(NSError **, NSString *) = ^id(NSError **error, NSString *message) {
+        *error = [NSError errorWithCode:XSSyntaxError reason:message];
+        
+        return nil;
+    };
+    
     NSJSONReadingOptions options = NSJSONReadingJSON5Allowed | NSJSONReadingTopLevelDictionaryAssumed;
     id json = [NSJSONSerialization JSONObjectWithData:data options:options error:error];
     
-    if (*error || ![json isKindOfClass:NSDictionary.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"invalid JSON5 object"];
-        
-        return nil;
-    }
+    if (*error || ![json isKindOfClass:NSDictionary.class]) return block(error, @"invalid JSON5 object");
     
     NSDictionary *object = json;
     id version = object[@"_x"];
     
-    if (version && ![version isKindOfClass:NSNumber.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 number: _x"];
-        
-        return nil;
-    }
+    if (version && ![version isKindOfClass:NSNumber.class]) return block(error, @"expected JSON5 number: _x");
     
     _version = [version integerValue] ?: COMPILER;
     
-    id repo = object[@"repo"];
+    id project = object[@"project"];
     
-    if (repo && ![repo isKindOfClass:NSString.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 string: repo"];
-        
-        return nil;
-    }
+    if (![project isKindOfClass:NSString.class]) return block(error, @"expected JSON5 string: project");
     
-    _repo = repo;
+    _project = project;
     
-    id dependencies = object[@"dependencies"];
+    id binaries = object[@"require"];
     
-    if (!dependencies) {
-        _dependencies = NSDictionary.dictionary;
-    } else if (![dependencies isKindOfClass:NSDictionary.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 object: dependencies"];
-        
-        return nil;
+    if (!binaries) {
+        _binaries = NSArray.array;
+    } else if (![binaries isKindOfClass:NSArray.class]) {
+        return block(error, @"expected JSON5 array: require");
     } else {
-        NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithDictionary:dependencies];
+        NSMutableArray *array = [NSMutableArray arrayWithArray:binaries];
+        int index = 0;
         
-        for (NSString *key in copy.allKeys) {
-            if ([copy[key] isKindOfClass:NSString.class]) {
-                if ([(NSString *) copy[key] length] == 0) {
-                    *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: dependencies.%@", key]];
-                    
-                    return nil;
-                }
+        for (NSObject *item in array) {
+            if (![item isKindOfClass:NSString.class]) {
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: require[%d]", index];
                 
-                NSArray *array = @[[NSString stringWithString:copy[key]]];
-                
-                [copy setObject:array forKey:key];
-                
-                continue;
-            } else if ([copy[key] isKindOfClass:NSArray.class]) {
-                NSArray *array = dependencies[key];
-                
-                if (!array.count) {
-                    *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 array: dependencies.%@", key]];
-                    
-                    return nil;
-                }
-                
-                for (NSObject *item in array) {
-                    if (![item isKindOfClass:NSString.class]) {
-                        *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: dependencies.%@", key]];
-                        
-                        return nil;
-                    }
-                }
-                
-                continue;
+                return block(error, message);
             }
             
-            *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string|array: dependencies.%@", key]];
-            
-            return nil;
+            index++;
         }
         
-        _dependencies = [NSDictionary dictionaryWithDictionary:copy];
+        _binaries = [NSArray arrayWithArray:array];
     }
     
     id scripts = object[@"scripts"];
@@ -102,32 +67,31 @@
     if (!scripts) {
         _scripts = NSDictionary.dictionary;
     } else if (![scripts isKindOfClass:NSDictionary.class]) {
-        *error = [NSError errorWithCode:XSSyntaxError reason:@"expected JSON5 object: scripts"];
-        
-        return nil;
+        return block(error, @"expected JSON5 object: scripts");
     } else {
-        NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithDictionary:scripts];
+        NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:scripts];
         
-        for (NSString *key in copy.allKeys) {
-            if (![copy[key] isKindOfClass:NSDictionary.class]) {
-                *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 object: scripts.%@", key]];
+        for (NSString *key in object.allKeys) {
+            if (![object[key] isKindOfClass:NSDictionary.class]) {
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 object: scripts.%@", key];
                 
-                return nil;
+                return block(error, message);
             }
             
-            id info = scripts[key][@"info"];
-            id commands = scripts[key][@"run"];
+            id info = object[key][@"info"];
             
             if (info && ![info isKindOfClass:NSString.class]) {
-                *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: scripts.%@.info", key]];
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: scripts.%@.info", key];
                 
-                return nil;
+                return block(error, message);
             }
+            
+            id commands = object[key][@"run"];
             
             if ([commands isKindOfClass:NSString.class]) {
                 XSScript *script = [[XSScript alloc] initWithInfo:info commands:@[ commands ]];
                 
-                [copy setObject:script forKey:key];
+                [object setObject:script forKey:key];
                 
                 continue;
             }
@@ -135,25 +99,25 @@
             if ([commands isKindOfClass:NSArray.class]) {
                 for (NSObject *item in commands) {
                     if (![item isKindOfClass:NSString.class]) {
-                        *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string: scripts.%@.run", key]];
+                        NSString *message = [NSString stringWithFormat:@"expected JSON5 string: scripts.%@.run", key];
                         
-                        return nil;
+                        return block(error, message);
                     }
                 }
                 
                 XSScript *script = [[XSScript alloc] initWithInfo:info commands:commands];
                 
-                [copy setObject:script forKey:key];
+                [object setObject:script forKey:key];
                 
                 continue;
             }
             
-            *error = [NSError errorWithCode:XSSyntaxError reason:[NSString stringWithFormat:@"expected JSON5 string|array: scripts.%@.run", key]];
+            NSString *message = [NSString stringWithFormat:@"expected JSON5 string|array: scripts.%@.run", key];
             
-            return nil;
+            return block(error, message);
         }
         
-        _scripts = [NSDictionary dictionaryWithDictionary:copy];
+        _scripts = [NSDictionary dictionaryWithDictionary:object];
     }
     
     return self;

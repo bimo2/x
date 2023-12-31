@@ -14,15 +14,15 @@
 
 - (instancetype)initWitPath:(NSString *)path error:(NSError **)error;
 
-- (void)docs;
+- (void)documentation;
 
-- (void)cloneGitRepositoryWithURL:(NSString *)url error:(NSError **)error;
+- (void)cloneGitRepositoryAtURL:(NSString *)url error:(NSError **)error;
 
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error;
 
 - (void)version;
 
-- (void)runScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error;
+- (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error;
 
 @end
 

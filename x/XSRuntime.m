@@ -25,13 +25,18 @@
 - (instancetype)initWitPath:(NSString *)path error:(NSError **)error {
     _path = path;
     
-    if (path) _context = [[XSContext alloc] initWithData:[NSData dataWithContentsOfFile:path] error:error];
+    if (path) {
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        
+        _context = [[XSContext alloc] initWithData:data error:error];
+    }
     
     return self;
 }
 
-- (void)docs {
-    PRINT_INFO(@"x".UTF8String, ([NSString stringWithFormat:@"(%@)\n-", self.context.repo ?: @"null"]).UTF8String);
+- (void)documentation {
+    PRINT_SCOPE((self.context.project ?: @"null").UTF8String);
+    PRINT("--");
     
     if (self.context) {
         for (NSString *name in self.context.scripts.allKeys) {
@@ -44,7 +49,7 @@
     }
 }
 
-- (void)cloneGitRepositoryWithURL:(NSString *)url error:(NSError **)error {
+- (void)cloneGitRepositoryAtURL:(NSString *)url error:(NSError **)error {
     NSURL *gitURL = [NSURL URLWithString:url];
     
     if (!gitURL || !gitURL.scheme || !gitURL.host) {
@@ -88,9 +93,9 @@
     PRINT(([NSString stringWithFormat:@"x/%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER]).UTF8String);
 }
 
-- (void)runScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
+- (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
     if (!self.context) {
-        PRINT_STATUS(XSRuntimeError, ([NSString stringWithFormat:@"`%@` not found", @X_JSON5]).UTF8String);
+        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"`%@` not found", @X_JSON5]];
         
         return;
     }
@@ -122,7 +127,7 @@
     
     NSNumber *elapsed = [NSNumber numberWithDouble:start.timeIntervalSinceNow * -1];
     
-    PRINT_STATUS(0, ([NSString stringWithFormat:@"%.3fs", elapsed.doubleValue]).UTF8String);
+    PRINT_TIME(elapsed.doubleValue);
 }
 
 @end

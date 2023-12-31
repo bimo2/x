@@ -10,7 +10,7 @@
     "install": {
       "info": "install ...",
       "run": [
-        "echo download #host -> 127.0.0.1#/sdk",
+        "echo download http://127.0.0.1/sdk",
         "echo install -a"
       ]
     },

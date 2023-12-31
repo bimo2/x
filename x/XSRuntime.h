@@ -10,7 +10,7 @@
 
 @interface XSRuntime : NSObject
 
-@property (nonatomic, copy) NSString *path;
+@property (nonatomic, copy, readonly) NSString *path;
 
 - (instancetype)initWitPath:(NSString *)path error:(NSError **)error;
 

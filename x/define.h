@@ -22,7 +22,7 @@
 #define DOCS_URL "https://json5.dev"
 
 #define PRINT(cstring) printf("%s\n", cstring)
-#define PRINT_SCOPE(cstring) printf("x\\\033[1m%s\033[0m\n", cstring)
+#define PRINT_HEADER(cstring) printf("x\\\033[1m%s\033[0m\n", cstring)
 #define PRINT_INFO(title, cstring) printf("\033[1m%s\033[0m %s\n", title, cstring)
 #define PRINT_TIME(double) printf("\033[1;92m\u2713\033[0;92m %.3fs\033[0m\n", double)
 #define PRINT_ERROR(cstring) printf("\033[1;91m\u2717\033[0;91m %s\033[0m\n", cstring)
@@ -39,7 +39,7 @@
 "  install: {\n" \
 "    info: 'install ...',\n" \
 "    run: [\n" \
-"      'echo download #host -> 127.0.0.1#/sdk',\n" \
+"      'echo download http://127.0.0.1/sdk',\n" \
 "      'echo install -a'\n" \
 "    ]\n" \
 "  },\n" \

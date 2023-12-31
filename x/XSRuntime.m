@@ -35,12 +35,23 @@
 }
 
 - (void)documentation {
-    PRINT_SCOPE((self.context.project ?: @"null").UTF8String);
+    PRINT_HEADER((self.context.project ?: @"null").UTF8String);
     PRINT("--");
     
     if (self.context) {
-        for (NSString *name in self.context.scripts.allKeys) {
-            PRINT([(XSScript *) self.context.scripts[name] signatureWithName:name].UTF8String);
+        NSInteger maxLength = 0;
+        
+        for (XSScript *script in self.context.scripts) {
+            NSString *signature = script.signature;
+            
+            if (signature.length > maxLength) maxLength = signature.length;
+        }
+        
+        for (XSScript *script in self.context.scripts) {
+            NSString *leading = [script.signature stringByPaddingToLength:maxLength + 4 withString:@" " startingAtIndex:0];
+            NSString *line = [leading stringByAppendingString:script.info];
+            
+            PRINT(line.UTF8String);
         }
     } else {
         PRINT(@"<url>            clone git repository".UTF8String);
@@ -90,26 +101,34 @@
     NSString *arch = @"intel";
 #endif
     
-    PRINT(([NSString stringWithFormat:@"x/%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER]).UTF8String);
+    PRINT(([NSString stringWithFormat:@"x\\%@ %s (%s%d)", arch, VERSION, BUILD, BUILD_NUMBER]).UTF8String);
 }
 
 - (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
     if (!self.context) {
-        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"`%@` not found", @X_JSON5]];
+        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"not found: `%@`", @X_JSON5]];
         
         return;
     }
     
-    XSScript *script = self.context.scripts[name];
+    XSScript *script;
+    
+    for (XSScript *object in self.context.scripts) {
+        if ([object.name isEqualToString:name]) {
+            script = object;
+            
+            break;
+        }
+    }
     
     if (!script) {
-        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"undefined script: %@", name]];
+        *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"undefined: %@", name]];
         
         return;
     }
     
     NSDate *start = NSDate.date;
-    NSArray *lines = [XSCompiler compileScript:script options:options error:error];
+    NSArray *lines = [XSCompiler compile:script options:options error:error];
     
     if (*error) return;
     

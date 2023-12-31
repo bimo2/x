@@ -10,12 +10,13 @@
 
 @interface XSScript : NSObject
 
-@property (nonatomic, copy) NSString *info;
-@property (nonatomic) NSArray *commands;
+@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *info;
+@property (nonatomic, readonly) NSArray *commands;
 
-- (instancetype)initWithInfo:(NSString *)info commands:(NSArray *)commands;
+- (instancetype)initWithName:(NSString *)name info:(NSString *)info commands:(NSArray *)commands;
 
-- (NSString *)signatureWithName:(NSString *)name;
+- (NSString *)signature;
 
 @end
 

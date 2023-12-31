@@ -47,11 +47,11 @@
         return block(error, @"expected JSON5 array: require");
     } else {
         NSMutableArray *array = [NSMutableArray arrayWithArray:binaries];
-        int index = 0;
+        NSInteger index = 0;
         
         for (NSObject *item in array) {
             if (![item isKindOfClass:NSString.class]) {
-                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: require[%d]", index];
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: require[%ld]", index];
                 
                 return block(error, message);
             }
@@ -65,11 +65,12 @@
     id scripts = object[@"scripts"];
     
     if (!scripts) {
-        _scripts = NSDictionary.dictionary;
+        _scripts = NSArray.array;
     } else if (![scripts isKindOfClass:NSDictionary.class]) {
         return block(error, @"expected JSON5 object: scripts");
     } else {
-        NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:scripts];
+        NSDictionary *object = [NSMutableDictionary dictionaryWithDictionary:scripts];
+        NSMutableArray *array = NSMutableArray.array;
         
         for (NSString *key in object.allKeys) {
             if (![object[key] isKindOfClass:NSDictionary.class]) {
@@ -89,9 +90,9 @@
             id commands = object[key][@"run"];
             
             if ([commands isKindOfClass:NSString.class]) {
-                XSScript *script = [[XSScript alloc] initWithInfo:info commands:@[ commands ]];
+                XSScript *script = [[XSScript alloc] initWithName:key info:info commands:@[ commands ]];
                 
-                [object setObject:script forKey:key];
+                [array addObject:script];
                 
                 continue;
             }
@@ -105,9 +106,9 @@
                     }
                 }
                 
-                XSScript *script = [[XSScript alloc] initWithInfo:info commands:commands];
+                XSScript *script = [[XSScript alloc] initWithName:key info:info commands:commands];
                 
-                [object setObject:script forKey:key];
+                [array addObject:script];
                 
                 continue;
             }
@@ -117,7 +118,7 @@
             return block(error, message);
         }
         
-        _scripts = [NSDictionary dictionaryWithDictionary:object];
+        _scripts = [NSArray arrayWithArray:array];
     }
     
     return self;

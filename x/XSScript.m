@@ -6,35 +6,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XSCompiler.h"
 #import "XSToken.h"
 
 #import "XSScript.h"
 
 @implementation XSScript
 
-- (instancetype)initWithInfo:(NSString *)info commands:(NSArray *)commands {
+- (instancetype)initWithName:(NSString *)name info:(NSString *)info commands:(NSArray *)commands {
+    _name = name;
     _info = info;
     _commands = [commands copy];
     
     return self;
 }
 
-- (NSString *)signatureWithName:(NSString *)name {
-    NSMutableArray *tokens = NSMutableArray.array;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"#(?<=#)((\\w+[!]?)|(\\w+ -> ([^\\s#]+|\"[^#]+\")))(?=#)#" options:NSRegularExpressionCaseInsensitive error:nil];
-    
-    for (int i = 0; i < self.commands.count; i++) {
-        NSString *line = [self.commands objectAtIndex:i];
-        NSArray *matches = [regex matchesInString:line options:0 range:NSMakeRange(0, line.length)];
-        
-        for (NSTextCheckingResult *match in matches) {
-            XSToken *token = [[XSToken alloc] initWithTextMatch:match line:line lineNumber:i];
-            
-            [tokens addObject:token];
-        }
-    }
-    
-    NSString *result = [NSString stringWithString:name];
+- (NSString *)signature {
+    NSString *result = [NSString stringWithString:self.name];
+    NSArray *tokens = [XSCompiler tokenize:self];
     
     for (XSToken *token in tokens) {
         NSString *format = token.isRequired ? @" <%@!>" : @" <%@>";

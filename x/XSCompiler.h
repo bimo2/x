@@ -12,7 +12,9 @@
 
 @interface XSCompiler : NSObject
 
-+ (NSArray *)compileScript:(XSScript *)script options:(NSArray *)options error:(NSError **)error;
++ (NSArray *)compile:(XSScript *)script options:(NSArray *)options error:(NSError **)error;
+
++ (NSArray *)tokenize:(XSScript *)script;
 
 @end
 

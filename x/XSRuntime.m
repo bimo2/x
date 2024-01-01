@@ -41,6 +41,8 @@
     
     if (self.context) {
         NSInteger maxLength = 0;
+        NSInteger index = 1;
+        NSInteger count = self.context.scripts.count;
         
         for (XSScript *script in self.context.scripts) {
             NSString *signature = script.signature;
@@ -50,13 +52,27 @@
         
         for (XSScript *script in self.context.scripts) {
             NSString *leading = [script.signature stringByPaddingToLength:maxLength + 4 withString:@" " startingAtIndex:0];
-            NSString *line = [leading stringByAppendingString:script.info ?: @""];
+            NSString *line;
+            
+            if (index == count) {
+                line = [NSString stringWithFormat:@"%@%@\n", leading, script.info ?: @""];
+            } else {
+                line = [leading stringByAppendingString:script.info ?: @""];
+            }
             
             PRINT(line.UTF8String);
+            index++;
         }
         
-        NSInteger count = self.context.scripts.count;
-        NSString *caption = [NSString stringWithFormat:@"%@%ld %@", count > 0 ? @"\n" : @"", count, count == 1 ? @"script" : @"scripts"];
+        NSArray *errors = self.resolve;
+        
+        if (errors) {
+            for (NSError *error in errors) PRINT_ERROR(error.localizedDescription.UTF8String);
+            
+            return;
+        }
+        
+        NSString *caption = [NSString stringWithFormat:@"%ld %@", count, count == 1 ? @"script" : @"scripts"];
         
         PRINT(caption.UTF8String);
     } else {
@@ -164,6 +180,32 @@
     NSNumber *elapsed = [NSNumber numberWithDouble:start.timeIntervalSinceNow * -1];
     
     PRINT_TIME(elapsed.doubleValue);
+}
+
+- (NSArray *)resolve {
+    if (!self.context) return nil;
+    
+    NSMutableArray *errors = NSMutableArray.array;
+    
+    for (NSString *bin in self.context.binaries) {
+        NSInteger status;
+        
+        if (bin.isAbsolutePath) {
+            status = ![NSFileManager.defaultManager fileExistsAtPath:bin];
+        } else {
+            NSString *command = [NSString stringWithFormat:@"sh -c 'which -s %@'", bin];
+            
+            status = system(command.UTF8String);
+        }
+        
+        if (status) {
+            NSError *error = [NSError errorWithCode:XSSystemError reason:[NSString stringWithFormat:@"`%@` not found", bin]];
+            
+            [errors addObject:error];
+        }
+    }
+    
+    return errors.count ? [NSArray arrayWithArray:errors] : nil;
 }
 
 @end

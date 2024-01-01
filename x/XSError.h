@@ -14,6 +14,7 @@ enum {
     XSGitError,
     XSSyntaxError,
     XSRuntimeError,
+    XSSystemError,
 };
 
 @interface NSError (XSError)

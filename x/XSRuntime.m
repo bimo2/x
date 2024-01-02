@@ -50,7 +50,11 @@
             if (signature.length > maxLength) maxLength = signature.length;
         }
         
-        for (XSScript *script in self.context.scripts) {
+        NSArray *sorted = [self.context.scripts sortedArrayUsingComparator:^NSComparisonResult(XSScript *a, XSScript *b) {
+            return [a.name compare:b.name];
+        }];
+        
+        for (XSScript *script in sorted) {
             NSString *leading = [script.signature stringByPaddingToLength:maxLength + 4 withString:@" " startingAtIndex:0];
             NSString *line;
             

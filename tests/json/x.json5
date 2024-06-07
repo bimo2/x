@@ -1,29 +1,29 @@
 // https://json5.dev
 _x: 0,
-project: 'github',
+git: 'github',
 require: [
   'git',
   'nano',
   'xcodebuild'
 ],
-scripts: {
+cli: {
   install: {
-    info: 'install ...',
-    run: [
+    d: 'install ...',
+    zsh: [
       'echo download http://127.0.0.1/sdk',
       'echo install -a'
     ]
   },
   start: {
-    info: 'start ...',
-    run: 'echo server -p #port -> 4000#'
+    d: 'start ...',
+    zsh: 'echo server -p #port -> 4000#'
   },
   build: {
-    info: 'build ...',
-    run: 'echo build -o #bin!#'
+    d: 'build ...',
+    zsh: 'echo build -o #bin!#'
   },
   test: {
-    info: 'test ...',
-    run: 'echo test #suite#'
+    d: 'test ...',
+    zsh: 'echo test #suite#'
   }
 }

@@ -8,8 +8,8 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 
-#define VERSION "0.1"
-#define BUILD "1A"
+#define VERSION "0.2"
+#define BUILD "2A"
 #define COMPILER 0
 
 #ifndef BUILD_NUMBER
@@ -32,31 +32,31 @@
 #define TEMPLATE_JSON5 \
 "// " DOCS_URL "\n" \
 "_x: 0,\n" \
-"project: '%@',\n" \
+"git: '%@',\n" \
 "require: [\n" \
 "  'git',\n" \
 "  'nano',\n" \
 "  'xcodebuild'\n" \
 "],\n" \
-"scripts: {\n" \
+"cli: {\n" \
 "  install: {\n" \
-"    info: 'install ...',\n" \
-"    run: [\n" \
+"    d: 'install ...',\n" \
+"    sh: [\n" \
 "      'echo download http://127.0.0.1/sdk',\n" \
 "      'echo install -a'\n" \
 "    ]\n" \
 "  },\n" \
 "  start: {\n" \
-"    info: 'start ...',\n" \
-"    run: 'echo server -p #port -> 4000#'\n" \
+"    d: 'start ...',\n" \
+"    sh: 'echo server -p #port -> 4000#'\n" \
 "  },\n" \
 "  build: {\n" \
-"    info: 'build ...',\n" \
-"    run: 'echo build -o #bin!#'\n" \
+"    d: 'build ...',\n" \
+"    sh: 'echo build -o #bin!#'\n" \
 "  },\n" \
 "  test: {\n" \
-"    info: 'test ...',\n" \
-"    run: 'echo test #suite#'\n" \
+"    d: 'test ...',\n" \
+"    sh: 'echo test #suite#'\n" \
 "  }\n" \
 "}\n"
 

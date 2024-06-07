@@ -33,9 +33,9 @@
     
     _version = [version integerValue] ?: COMPILER;
     
-    id project = object[@"project"];
+    id project = object[@"git"];
     
-    if (![project isKindOfClass:NSString.class]) return block(error, @"expected JSON5 string: project");
+    if (![project isKindOfClass:NSString.class]) return block(error, @"expected JSON5 string: git");
     
     _project = project;
     
@@ -62,35 +62,46 @@
         _binaries = [NSArray arrayWithArray:array];
     }
     
-    id scripts = object[@"scripts"];
+    id scripts = object[@"cli"];
     
     if (!scripts) {
         _scripts = NSArray.array;
     } else if (![scripts isKindOfClass:NSDictionary.class]) {
-        return block(error, @"expected JSON5 object: scripts");
+        return block(error, @"expected JSON5 object: cli");
     } else {
         NSDictionary *object = [NSMutableDictionary dictionaryWithDictionary:scripts];
         NSMutableArray *array = NSMutableArray.array;
         
         for (NSString *key in object.allKeys) {
             if (![object[key] isKindOfClass:NSDictionary.class]) {
-                NSString *message = [NSString stringWithFormat:@"expected JSON5 object: scripts.%@", key];
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 object: cli.%@", key];
                 
                 return block(error, message);
             }
             
-            id info = object[key][@"info"];
+            id info = object[key][@"d"] ?: object[key][@"info"];
             
             if (info && ![info isKindOfClass:NSString.class]) {
-                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: scripts.%@.info", key];
+                NSString *message = [NSString stringWithFormat:@"expected JSON5 string: cli.%@.d", key];
                 
                 return block(error, message);
             }
             
-            id commands = object[key][@"run"];
+            NSString *shell;
+            id commands;
+            
+            if ((commands = object[key][@"zsh"])) {
+                shell = @"zsh";
+            } else if ((commands = object[key][@"bash"])) {
+                shell = @"bash";
+            } else if ((commands = object[key][@"csh"])) {
+                shell = @"csh";
+            } else if ((commands = object[key][@"sh"])) {
+                shell = @"sh";
+            }
             
             if ([commands isKindOfClass:NSString.class]) {
-                XSScript *script = [[XSScript alloc] initWithName:key info:info commands:@[ commands ]];
+                XSScript *script = [[XSScript alloc] initWithName:key info:info shell:shell commands:@[ commands ]];
                 
                 [array addObject:script];
                 
@@ -100,20 +111,20 @@
             if ([commands isKindOfClass:NSArray.class]) {
                 for (NSObject *item in commands) {
                     if (![item isKindOfClass:NSString.class]) {
-                        NSString *message = [NSString stringWithFormat:@"expected JSON5 string: scripts.%@.run", key];
+                        NSString *message = [NSString stringWithFormat:@"expected JSON5 string: cli.%@.sh", key];
                         
                         return block(error, message);
                     }
                 }
                 
-                XSScript *script = [[XSScript alloc] initWithName:key info:info commands:commands];
+                XSScript *script = [[XSScript alloc] initWithName:key info:info shell:shell commands:commands];
                 
                 [array addObject:script];
                 
                 continue;
             }
             
-            NSString *message = [NSString stringWithFormat:@"expected JSON5 string|array: scripts.%@.run", key];
+            NSString *message = [NSString stringWithFormat:@"expected JSON5 string|array: cli.%@.sh", key];
             
             return block(error, message);
         }

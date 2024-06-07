@@ -94,7 +94,7 @@ int main(int argc, const char *argv[]) {
         
         if ([command hasPrefix:@"https://"] && [command hasSuffix:@".git"]) {
             [app cloneGitRepositoryAtURL:command error:&error];
-        } else if (!app.path && [command isEqualToString:@"init"]) {
+        } else if (!app.path && [command isEqualToString:@"."]) {
             [app createJSON5WithFileManager:NSFileManager.defaultManager error:&error];
         } else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"]) {
             [app version];

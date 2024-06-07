@@ -76,12 +76,12 @@
             return;
         }
         
-        NSString *caption = [NSString stringWithFormat:@"%ld %@", count, count == 1 ? @"script" : @"scripts"];
+        NSString *caption = [NSString stringWithFormat:@"%ld", count];
         
         PRINT(caption.UTF8String);
     } else {
         PRINT(@"<url>            clone git repository".UTF8String);
-        PRINT(@"init             create `x.json5` file".UTF8String);
+        PRINT(@".                create `x.json5` file".UTF8String);
         PRINT(@"--version, -v".UTF8String);
         PRINT(@"\n-".UTF8String);
     }
@@ -172,7 +172,7 @@
     for (NSString *line in lines) {
         PRINT_INFO(name.UTF8String, line.UTF8String);
         
-        NSInteger code = system([NSString stringWithFormat:@"cd %@ && sh -c '%@'", self.path.stringByDeletingLastPathComponent, line].UTF8String);
+        NSInteger code = system([NSString stringWithFormat:@"cd %@ && %@ -c '%@'", self.path.stringByDeletingLastPathComponent, script.shell, line].UTF8String);
         
         if (code) {
             *error = [NSError errorWithCode:code reason:[NSString stringWithFormat:@"failed (%li)", code]];

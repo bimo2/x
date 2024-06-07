@@ -1,26 +1,26 @@
 // https://json5.dev
 _x: 0,
-project: 'x',
+git: 'x',
 require: [
   'buildkite-agent',
   'git',
   'xcodebuild'
 ],
-scripts: {
+cli: {
   build: {
-    info: 'build x binary',
-    run: 'xcodebuild clean build -project x.xcodeproj -arch arm64 -scheme x -configuration #config -> Debug# -derivedDataPath ./xcode'
+    d: 'build x binary',
+    zsh: 'xcodebuild clean build -project x.xcodeproj -arch arm64 -scheme x -configuration #config -> Debug# -derivedDataPath ./xcode'
   },
   test: {
-    info: 'run unit tests',
-    run: 'xcodebuild test -project x.xcodeproj -scheme tests'
+    d: 'run unit tests',
+    zsh: 'xcodebuild test -project x.xcodeproj -scheme tests'
   },
   clean: {
-    info: 'delete untracked files',
-    run: 'git clean -dfxi -e .env -e xcschemes'
+    d: 'delete untracked files',
+    zsh: 'git clean -dfxi -e .env -e xcschemes'
   },
   buildkite: {
-    info: 'start local buildkite agent',
-    run: 'buildkite-agent start --token 2b8ce25299f984f75bd2dd1bacfc0f2d23fed2b13cbf5f3b0a'
+    d: 'start local buildkite agent',
+    zsh: 'buildkite-agent start --token 2b8ce25299f984f75bd2dd1bacfc0f2d23fed2b13cbf5f3b0a'
   }
 }

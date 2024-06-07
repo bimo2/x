@@ -22,7 +22,7 @@
 
 - (void)version;
 
-- (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error;
+- (void)executeWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error;
 
 @end
 

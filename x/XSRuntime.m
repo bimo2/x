@@ -141,7 +141,7 @@
     PRINT(string.UTF8String);
 }
 
-- (void)xScriptWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
+- (void)executeWithName:(NSString *)name options:(NSArray *)options error:(NSError **)error {
     if (!self.context) {
         *error = [NSError errorWithCode:XSRuntimeError reason:[NSString stringWithFormat:@"not found: `%@`", @X_JSON5]];
         

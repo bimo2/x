@@ -36,7 +36,7 @@
 "require: [\n" \
 "  'git',\n" \
 "  'nano',\n" \
-"  'xcodebuild'\n" \
+"  'ssh'\n" \
 "],\n" \
 "cli: {\n" \
 "  install: {\n" \

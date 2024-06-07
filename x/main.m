@@ -99,7 +99,7 @@ int main(int argc, const char *argv[]) {
         } else if ([command isEqualToString:@"--version"] || [command isEqualToString:@"-v"]) {
             [app version];
         } else {
-            [app xScriptWithName:command options:options error:&error];
+            [app executeWithName:command options:options error:&error];
         }
         
         if (error) return fail((int) error.code, error.localizedDescription.UTF8String);

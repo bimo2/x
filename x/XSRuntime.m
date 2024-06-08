@@ -113,6 +113,7 @@
     NSString *command = [NSString stringWithFormat:@"cd $HOME/%@/%@", gitURL.host, gitURL.lastPathComponent.stringByDeletingPathExtension];
     
     PRINT_COMMAND(command.UTF8String);
+    system([NSString stringWithFormat:@"echo \"%@\" | pbcopy", command].UTF8String);
 }
 
 - (void)createJSON5WithFileManager:(NSFileManager *)fileManager error:(NSError **)error {

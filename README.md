@@ -1,6 +1,6 @@
-![x](.github/banner.svg)
+![x](.github/header.svg)
 
-**x is a macOS command line tool for running development tasks.** Create an `x.json5` file in your project to:
+x is a macOS command line tool, like Shopify's internal `dev` command, for running local developer tasks. Create an `x.json5` file in your project to:
 
 - `install` libraries and frameworks
 - `start` servers and run `tests`
@@ -10,11 +10,11 @@
 ## Usage
 
 > [!NOTE]
-> x is built for the latest release of macOS.
+> OS support: macOS 14+
 
 ### Install
 
-You can download all pre-compiled binaries from the [GitHub Releases](https://github.com/bimo2/x/releases) section or run the install script out of the box:
+You can download all precompiled binaries from the [GitHub Releases](https://github.com/bimo2/x/releases) section or run the install script out of the box:
 
 ```sh
 curl -sf https://raw.githubusercontent.com/bimo2/x/main/install | sh
@@ -28,7 +28,7 @@ x
 
 ## DEBUG
 
-Use `x` to build x. Production binaries are built with CI (Buildkite) and should downloaded and renamed to `x-macos-$(VERSION)` (ex. `x-macos-0.1`).
+Build `x` using x:
 
 ```sh
 # build the debug scheme
@@ -40,6 +40,9 @@ x build
 # test the install script
 curl -sf file://$(pwd)/install | sh
 ```
+
+> [!IMPORTANT]
+> Release binaries are built with CI (Buildkite) and should downloaded and renamed to `x-macos-$(VERSION)` (ex. `x-macos-0.1`).
 
 #
 
